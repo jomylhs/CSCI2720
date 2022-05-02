@@ -1,0 +1,183 @@
+###MongoDB connection: mongodb+srv://stu060:p422338-@csci2720.6hfif.mongodb.net/stu060
+
+
+#====================
+# Sign Up
+#==================
+###Please Verify the length of username and password on client side
+POST http://localhost:3000/users/signUp
+Content-Type: application/json
+
+{
+    "username": "user1",
+    "password": "user2"
+}
+
+###
+POST http://localhost:3000/admin/signUp
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "admin"
+}
+
+#=======================
+# Non user
+#=======================
+
+###Non-user 1
+#a token string will be returned after successful login, please store the token string in the local storage of user broswer. Otherwise, the user cannot access any function of the api. You can access the token by res.accessToken after doing JSON parse to the response
+
+POST http://localhost:3000/users/login
+Content-Type: application/json
+
+{
+    "username": "user1",
+    "password": "user1"
+}
+
+###Non-user 2
+#same as Non-user 1
+POST http://localhost:3000/admin/login
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "admin"
+}
+
+#======================
+# user
+#========================
+#Authorization is the header of the fetch request, please include the authorizatioh as this format:
+#"Bearer" + accesstoken of the user login operation
+
+
+###User 1
+#You can get a json response of the information of all locations, autoupdated is done
+GET http://localhost:3000/users/locations
+Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNWJjYWM1NGZhZWZlMTc1MGM4NzYxMSIsImlhdCI6MTY1MDE5MTI1NH0.JGcuH6LOx0hPhQyjU2Rm9ZzD0BsLQWx5JOTkXIo6mcM
+
+
+###User 3
+#You can search the information of the location by putting the query string of the name of the location at the end of the url as a parameter
+GET http://localhost:3000/users/location/search/L
+Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNWJjYWM1NGZhZWZlMTc1MGM4NzYxMSIsImlhdCI6MTY1MDE5MTI1NH0.JGcuH6LOx0hPhQyjU2Rm9ZzD0BsLQWx5JOTkXIo6mcM
+
+###User 4.a + 4.b
+#You can get the information of specific location by putting the location id of that location at the end of the url as a parameter
+GET http://localhost:3000/users/location/1
+Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNWJjYWM1NGZhZWZlMTc1MGM4NzYxMSIsImlhdCI6MTY1MDE5MTI1NH0.JGcuH6LOx0hPhQyjU2Rm9ZzD0BsLQWx5JOTkXIo6mcM
+
+###User 4.c
+#Adding comment to the location specify in the body
+POST http://localhost:3000/users/comment
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNWJjYWM1NGZhZWZlMTc1MGM4NzYxMSIsImlhdCI6MTY1MDE5MTI1NH0.JGcuH6LOx0hPhQyjU2Rm9ZzD0BsLQWx5JOTkXIo6mcM
+
+{
+    "locID": 1,
+    "content": "This is my first comment"
+}
+
+###User 5
+#Getting the information of user's favourite locations
+GET  http://localhost:3000/users/favorite
+Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNWJjYWM1NGZhZWZlMTc1MGM4NzYxMSIsImlhdCI6MTY1MDE5MTI1NH0.JGcuH6LOx0hPhQyjU2Rm9ZzD0BsLQWx5JOTkXIo6mcM
+
+
+###User 5
+#Adding the location to user's favourite locations by specifying the location id at the end of the url
+POST  http://localhost:3000/users/favorite/create/1
+Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNWJjYWM1NGZhZWZlMTc1MGM4NzYxMSIsImlhdCI6MTY1MDE5MTI1NH0.JGcuH6LOx0hPhQyjU2Rm9ZzD0BsLQWx5JOTkXIo6mcM
+
+
+###User 5
+#Deleting the location in user's favourite locations by specifying the location id at the end of the url
+DELETE  http://localhost:3000/users/favorite/delete/1
+Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNWJjYWM1NGZhZWZlMTc1MGM4NzYxMSIsImlhdCI6MTY1MDE5MTI1NH0.JGcuH6LOx0hPhQyjU2Rm9ZzD0BsLQWx5JOTkXIo6mcM
+
+###User 6
+#Getting user information
+GET http://localhost:3000/users/username
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNWJjYWM1NGZhZWZlMTc1MGM4NzYxMSIsImlhdCI6MTY1MDE5MTI1NH0.JGcuH6LOx0hPhQyjU2Rm9ZzD0BsLQWx5JOTkXIo6mcM
+
+
+#===========================
+# Admin 
+#=============================
+#Authorization is the header of the fetch request, please include the authorizatioh as this format:
+#"Bearer" + accesstoken of the admin login operation
+
+
+###Admin 1
+#Update the location information 
+GET http://localhost:3000/admin/updateLocationsData
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNWJjYjU1NzIzMzU0OGNlNTc3MDBkYyIsImlhdCI6MTY1MTQyMzMwM30.Kzz-3YARvX8AhOBzplaEmX4aUe1kZmuGjCnflC5c9Sg
+
+###Admin 2(C)
+POST http://localhost:3000/admin/users/create
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNWJjYjU1NzIzMzU0OGNlNTc3MDBkYyIsImlhdCI6MTY1MTQyMzMwM30.Kzz-3YARvX8AhOBzplaEmX4aUe1kZmuGjCnflC5c9Sg
+
+{
+    "username": "user4",
+    "password": "user4"
+}
+
+###Admin 2(R)
+GET http://localhost:3000/admin/users/read
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNWJjYjU1NzIzMzU0OGNlNTc3MDBkYyIsImlhdCI6MTY1MTQyMzMwM30.Kzz-3YARvX8AhOBzplaEmX4aUe1kZmuGjCnflC5c9Sg
+
+###Admin 2(U)
+POST http://localhost:3000/admin/users/update
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNWJjYjU1NzIzMzU0OGNlNTc3MDBkYyIsImlhdCI6MTY1MTQyMzMwM30.Kzz-3YARvX8AhOBzplaEmX4aUe1kZmuGjCnflC5c9Sg
+
+{   "userID": 1,
+    "username": "user1"
+   
+}
+
+###Admin 2(D)
+DELETE  http://localhost:3000/admin/users/delete
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNWJjYjU1NzIzMzU0OGNlNTc3MDBkYyIsImlhdCI6MTY1MTQyMzMwM30.Kzz-3YARvX8AhOBzplaEmX4aUe1kZmuGjCnflC5c9Sg
+
+{   
+    "userID": 3
+}
+
+###Admin 3(C)
+POST http://localhost:3000/admin/location/create
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNWJjYjU1NzIzMzU0OGNlNTc3MDBkYyIsImlhdCI6MTY1MTQyMzMwM30.Kzz-3YARvX8AhOBzplaEmX4aUe1kZmuGjCnflC5c9Sg
+
+{
+    "name": "Tokyo"
+}
+
+###Admin 3(R)
+GET http://localhost:3000/admin/location/read/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNWJjYjU1NzIzMzU0OGNlNTc3MDBkYyIsImlhdCI6MTY1MTQyMzMwM30.Kzz-3YARvX8AhOBzplaEmX4aUe1kZmuGjCnflC5c9Sg
+
+###Admin 3(U)
+POST  http://localhost:3000/admin/location/update
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNWJjYjU1NzIzMzU0OGNlNTc3MDBkYyIsImlhdCI6MTY1MTQyMzMwM30.Kzz-3YARvX8AhOBzplaEmX4aUe1kZmuGjCnflC5c9Sg
+
+{   
+    "locationID": 3,
+    "name": "Finland"
+}
+
+###Admin 3(D)
+DELETE  http://localhost:3000/admin/location/delete
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNWJjYjU1NzIzMzU0OGNlNTc3MDBkYyIsImlhdCI6MTY1MTQyMzMwM30.Kzz-3YARvX8AhOBzplaEmX4aUe1kZmuGjCnflC5c9Sg
+
+{   
+    "locationID": 3
+}
+

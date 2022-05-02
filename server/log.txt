@@ -1,0 +1,13 @@
+
+{
+  "Request Time": "Sun, 01 May 2022 18:05:58 GMT",
+  "User IP": "::ffff:127.0.0.1",
+  "Request method": "GET",
+  "Request URL": "/users/locations"
+}
+{
+  "Request Time": "Sun, 01 May 2022 18:05:59 GMT",
+  "User IP": "::ffff:127.0.0.1",
+  "Request method": "GET",
+  "Request URL": "/users/locations"
+}
