@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="hi">123</div>
+    <button id="get">get</button>
+    <script defer>
+        document.getElementById('hi').addEventListener('click', async(e)=>{
+
+            const res = fetch('http://localhost:3000/users/login',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': "application/json"
+                },
+                body: JSON.stringify({
+                    "username": "user5",
+                    "password": "user5"
+                })
+            }).then(res=>res.json()).then(res=>localStorage.setItem('jwt', res.accessToken)).catch(err=>console.log(err))
+            return 
+        })
+        document.getElementById('get').addEventListener('click', async(e)=>{
+            const jwt = localStorage.getItem('jwt')
+            console.log(jwt)
+            const response = await fetch('http://localhost:3000/users/location/get/2', {
+                headers:{
+                    'Authorization': `Bearer ${jwt}`
+                }
+            }).then(res=>res.json())
+            console.log(response)
+        })
+    </script>
+</body>
+</html>

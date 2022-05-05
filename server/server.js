@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 const fetch = require('node-fetch')
 require('dotenv').config()
 const fs = require('fs')
-
+const cors = require('cors')
 
 const {UserSchema, AdminSchema, LocationSchema} = require('./model')
 
@@ -27,6 +27,11 @@ const app = express()
 app.listen(3000)
 
 app.use(express.json())
+app.use(cors({
+    origin: '*'
+}))
+
+
 
 app.use((req, res, next)=>{
 
@@ -50,6 +55,8 @@ app.use((req, res, next)=>{
     })
     next()
 })
+
+
 
 app.post('/users/signUp', async (req, res)=>{
     const {username, password} = req.body;
@@ -88,11 +95,11 @@ app.post('/users/login', async (req, res)=>{
                 id: user.id
             }
             const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET)
-            res.json({accessToken: accessToken, message: 'Login Successfully'})
+            return res.json({accessToken: accessToken, message: 'Login Successfully'})
 
         }
         else{
-            res.status(403).json({message: 'wrong password'})
+            return res.status(403).json({message: 'wrong password'})
         }
     }
     catch{
